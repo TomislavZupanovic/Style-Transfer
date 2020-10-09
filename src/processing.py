@@ -10,7 +10,7 @@ class Images:
     def load_image(path, max_size=400, shape=None):
         """
         Used for loading content and style images and
-        converting to Tensor
+        converting them to Tensor
         """
 
         if 'http' in path:
@@ -36,10 +36,12 @@ class Images:
 
     @staticmethod
     def convert_image(tensor):
-        """ Converting image from Tensor to numpy array for plotting"""
+        """ Converting image from Tensor to numpy array for plotting """
         image = tensor.to('cpu').clone().detach()
         image = image.numpy().squeeze()
         image = image.transpose(1, 2, 0)
         """ Un-normalize """
         image = image * np.array((0.229, 0.224, 0.225)) + np.array((0.485, 0.456, 0.406))
         return image.clip(0, 1)
+
+
