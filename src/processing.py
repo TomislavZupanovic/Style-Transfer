@@ -5,12 +5,12 @@ from PIL import Image
 from torchvision import transforms
 
 
-class Images:
-    @staticmethod
-    def load_image(path, max_size=400, shape=None):
+class Images(object):
+
+    def load_image(self, path, max_size=400, shape=None):
         """
         Used for loading content and style images and
-        converting them to Tensor
+        converting them to Tensor type
         """
 
         if 'http' in path:
@@ -31,8 +31,8 @@ class Images:
                                               transforms.ToTensor(),
                                               transforms.Normalize((0.485, 0.456, 0.406),
                                                                    (0.229, 0.224, 0.225))])
-        image = input_transform(image)[:3, :, :].unsqueeze(0)
-        return image
+        self = input_transform(image)[:3, :, :].unsqueeze(0)
+        return self
 
     @staticmethod
     def convert_image(tensor):
