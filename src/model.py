@@ -5,7 +5,7 @@ from torchvision import models
 
 class Painter(object):
     def __init__(self):
-        self.model = models.vgg16(pretrained=True).features
+        self.model = models.vgg19(pretrained=True).features
         self.layers = None
         for parameter in self.model.parameters():
             parameter.requires_grad = False
