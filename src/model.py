@@ -66,6 +66,7 @@ class Painter(object):
     def paint(self,  steps, style_weight=1e7):
         """ Paints target content image with style form style image """
         self.optimizer = optim.Adam([self.target], lr=0.003)
+        print('STARTED PAINTING...')
         for step in range(1, steps + 1):
             target_features = Painter.get_features(self.target, self.model)
             """Computing content loss between target and content features"""
@@ -80,10 +81,10 @@ class Painter(object):
                 """ Style loss for given layer """
                 layer_style_loss = self.style_weights[layer] * torch.mean((target_gram_matrix - style_gram_matrix) ** 2)
                 style_loss += layer_style_loss / (depth * height * width)
-            """ Compute total loss and gradients"""
+            """ Compute total loss and gradients """
             total_loss = 1 * content_loss + style_weight * style_loss  # 1 represents content weight
             self.optimizer.zero_grad()  # Set gradients to zero
             total_loss.backward()  # Compute gradients with backprop
             self.optimizer.step()  # Perform gradient descent
-
+            print(f"\nCompleted epoch: {step}/{steps}")
 
